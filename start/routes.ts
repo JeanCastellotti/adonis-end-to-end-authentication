@@ -21,3 +21,11 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.on('/').render('index')
+
+Route.get('/login', ({ view }) => {
+  return view.render('auth/login')
+})
+
+Route.get('/register', ({ view }) => {
+  return view.render('auth/register')
+})
