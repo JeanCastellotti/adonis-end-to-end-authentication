@@ -26,6 +26,5 @@ Route.get('/login', ({ view }) => {
   return view.render('auth/login')
 })
 
-Route.get('/register', ({ view }) => {
-  return view.render('auth/register')
-})
+Route.get('/register', 'AuthController.create')
+Route.post('/register', 'AuthController.store')
