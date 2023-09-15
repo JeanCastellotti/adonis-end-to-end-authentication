@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdonisJS - End-to-end Authentication</title>
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+
+<body class="bg-gray-100">
+  <header class="bg-white py-5">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="/">Home</a>
+
+      <nav class="space-x-5">
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto mt-10">
+    @!section('content')
+  </main>
+</body>
+
+</html>
