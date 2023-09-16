@@ -22,9 +22,9 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.on('/').render('index')
 
-Route.get('/login', ({ view }) => {
-  return view.render('auth/login')
-})
-
-Route.get('/register', 'AuthController.create')
-Route.post('/register', 'AuthController.store')
+Route.group(() => {
+  Route.get('/login', 'AuthController.showLogin').as('showLogin')
+  Route.get('/register', 'AuthController.showRegister').as('showRegister')
+  Route.post('/register', 'AuthController.register').as('register')
+  Route.get('/verification/:email', 'AuthController.verify').as('verify')
+}).as('auth')
