@@ -49,6 +49,7 @@ export default class RegisterValidator {
     'email.required': 'Email is required',
     'email.unique': 'Email must be unique',
     'password.required': 'Password is required',
+    'password.minLength': 'Password must be at least 8 characters',
     'confirmed': 'Passwords are not the same',
   }
 }
