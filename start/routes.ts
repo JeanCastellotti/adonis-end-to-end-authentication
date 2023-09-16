@@ -23,7 +23,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.on('/').render('index')
 
 Route.group(() => {
-  Route.get('/login', 'LoginController.create').as('login.create')
+  Route.get('/login', 'AuthController.create').as('login.create')
+  Route.post('/login', 'AuthController.store').as('login.store')
   Route.get('/register', 'RegisterController.create').as('register.create')
   Route.post('/register', 'RegisterController.store').as('register.store')
   Route.get('/verification/new', 'EmailVerificationController.create').as('email.create')
