@@ -1,35 +1,60 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
-import EmailValidator from 'App/Validators/EmailValidator'
-import { string } from '@ioc:Adonis/Core/Helpers'
-import Encryption from '@ioc:Adonis/Core/Encryption'
 import PasswordReset from 'App/Mailers/PasswordReset'
+import User from 'App/Models/User'
+import PasswordResetValidator from 'App/Validators/PasswordResetValidator'
 
 export default class PasswordResetController {
-  public create({ view }: HttpContextContract) {
-    return view.render('auth/forgot-password')
+  public async create({ params, view, session, response }: HttpContextContract) {
+    try {
+      const user = await User.findByOrFail('password_reset_token', decodeURIComponent(params.token))
+
+      return view.render('auth/reset-password', {
+        token: user.passwordResetToken,
+        email: user.email,
+      })
+    } catch (error) {
+      session.flash({
+        alert: {
+          type: 'error',
+          message: 'Invalid password reset token',
+        },
+      })
+
+      return response.redirect('/forgot-password')
+    }
   }
 
   public async store({ request, session, response }: HttpContextContract) {
-    const { email } = await request.validate(EmailValidator)
+    const payload = await request.validate(PasswordResetValidator)
 
-    const user = await User.findByOrFail('email', email)
+    try {
+      const user = await User.findByOrFail('password_reset_token', payload.token)
 
-    const token = Encryption.encrypt(string.generateRandom(32))
+      user.password = payload.password
 
-    user.passwordResetToken = token
+      user.passwordResetToken = null
 
-    user.save()
+      await user.save()
 
-    await new PasswordReset(user, token).sendLater()
+      await new PasswordReset(user).sendLater()
 
-    session.flash({
-      alert: {
-        type: 'success',
-        message: 'A password reset link has been sent to your email address.',
-      },
-    })
+      session.flash({
+        alert: {
+          type: 'success',
+          message: 'Password reset successful.',
+        },
+      })
 
-    return response.redirect().back()
+      return response.redirect('/login')
+    } catch (error) {
+      session.flash({
+        alert: {
+          type: 'error',
+          message: 'Invalid password reset token',
+        },
+      })
+
+      return response.redirect().back()
+    }
   }
 }

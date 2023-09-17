@@ -2,15 +2,18 @@ import { BaseMailer, MessageContract } from '@ioc:Adonis/Addons/Mail'
 import User from 'App/Models/User'
 
 export default class PasswordReset extends BaseMailer {
-  constructor(private user: User) {
+  constructor(
+    private user: User,
+    private token: string
+  ) {
     super()
   }
 
   public prepare(message: MessageContract) {
     message
-      .subject('Your password has been reset')
+      .subject('Reset your password')
       .from('info@example.com')
       .to(this.user.email)
-      .htmlView('emails/password-reset', { user: this.user })
+      .htmlView('emails/password-reset-request', { user: this.user, token: this.token })
   }
 }

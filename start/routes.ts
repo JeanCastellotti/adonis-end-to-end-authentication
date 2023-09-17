@@ -26,17 +26,18 @@ Route.get('/dashboard', ({ view }) => {
   return view.render('dashboard')
 })
 
-Route.group(() => {
-  Route.get('/login', 'AuthController.create').as('login.create')
-  Route.post('/login', 'AuthController.store').as('login.store')
+Route.get('/login', 'AuthController.create')
+Route.post('/login', 'AuthController.store')
 
-  Route.get('/register', 'RegisterController.create').as('register.create')
-  Route.post('/register', 'RegisterController.store').as('register.store')
+Route.get('/register', 'RegisterController.create')
+Route.post('/register', 'RegisterController.store')
 
-  Route.get('/verification/new', 'EmailVerificationController.create').as('email.create')
-  Route.post('/verification', 'EmailVerificationController.store').as('email.store')
-  Route.get('/verification/:email', 'EmailVerificationController.verify').as('email.verify')
+Route.get('/verification/new', 'EmailVerificationController.create')
+Route.post('/verification', 'EmailVerificationController.store')
+Route.get('/verification/:email', 'EmailVerificationController.verify').as('email.verify')
 
-  Route.get('/forgot-password', 'PasswordResetController.create').as('password.create')
-  Route.post('/forgot-password', 'PasswordResetController.store').as('password.store')
-}).as('auth')
+Route.get('/forgot-password', 'PasswordResetRequestController.create')
+Route.post('/forgot-password', 'PasswordResetRequestController.store')
+
+Route.get('/reset-password/:token', 'PasswordResetController.create')
+Route.post('/reset-password', 'PasswordResetController.store')
