@@ -18,6 +18,7 @@ export default Env.rules({
   HOST: Env.schema.string({ format: 'host' }),
   PORT: Env.schema.number(),
   APP_KEY: Env.schema.string(),
+  APP_URL: Env.schema.string(),
   APP_NAME: Env.schema.string(),
   CACHE_VIEWS: Env.schema.boolean(),
   SESSION_DRIVER: Env.schema.string(),

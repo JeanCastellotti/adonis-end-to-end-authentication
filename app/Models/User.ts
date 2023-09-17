@@ -18,6 +18,9 @@ export default class User extends BaseModel {
   @column()
   public rememberMeToken: string | null
 
+  @column()
+  public passwordResetToken: string | null
+
   @column.dateTime()
   public emailVerifiedAt?: DateTime
 

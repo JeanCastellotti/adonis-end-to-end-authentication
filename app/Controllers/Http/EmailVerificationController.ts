@@ -1,9 +1,8 @@
-import Mail from '@ioc:Adonis/Addons/Mail'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import EmailValidator from 'App/Validators/EmailValidator'
 import { DateTime } from 'luxon'
-import Route from '@ioc:Adonis/Core/Route'
+import VerifyEmail from 'App/Mailers/VerifyEmail'
 
 export default class EmailVerificationController {
   public create({ view }: HttpContextContract) {
@@ -27,15 +26,7 @@ export default class EmailVerificationController {
     }
 
     if (user) {
-      const url = Route.makeSignedUrl('auth.email.verify', { email }, { expiresIn: '30m' })
-
-      await Mail.sendLater((message) => {
-        message
-          .from('info@example.com')
-          .to(user.email)
-          .subject('Verify your email address')
-          .htmlView('emails/verify-email', { user, url: `http://localhost:3333${url}` })
-      })
+      await new VerifyEmail(user).sendLater()
     }
 
     session.flash({
