@@ -24,7 +24,7 @@ Route.on('/').render('index')
 
 Route.get('/dashboard', ({ view }) => {
   return view.render('dashboard')
-})
+}).middleware('auth')
 
 Route.get('/login', 'AuthController.create')
 Route.post('/login', 'AuthController.store')
