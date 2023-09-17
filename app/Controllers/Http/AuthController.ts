@@ -8,8 +8,6 @@ export default class LoginController {
   public async store({ request, session, response, auth }: HttpContextContract) {
     const { email, password } = request.body()
 
-    console.log(request.body())
-
     try {
       await auth.attempt(email, password)
 

@@ -22,6 +22,10 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.on('/').render('index')
 
+Route.get('/dashboard', ({ view }) => {
+  return view.render('dashboard')
+})
+
 Route.group(() => {
   Route.get('/login', 'AuthController.create').as('login.create')
   Route.post('/login', 'AuthController.store').as('login.store')

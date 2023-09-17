@@ -10,13 +10,23 @@
 </head>
 
 <body class="bg-gray-100">
+  @if(auth.isLoggedIn && !auth.user.emailVerifiedAt)
+  <div class="bg-indigo-500">
+    <div class="container mx-auto px-5 py-3 text-white text-center text-sm">
+      <span>You have not verified your email address.</span>
+      <a href="/verification/new" class="underline">Didn't receive the verification link?</a>
+    </div>
+  </div>
+  @end
+
   <header class="bg-white p-5">
     <div class="container mx-auto flex items-center justify-between">
       <a href="/">Home</a>
 
       <nav class="space-x-5">
         @if(auth.isLoggedIn)
-        <span>{{ auth.user.name }}</span>
+        <span class="text-gray-500">{{ auth.user.name }}</span>
+        <a href="/dashboard">Dashboard</a>
         @else
         <a href="/login">Login</a>
         <a href="/register">Register</a>
