@@ -23,10 +23,14 @@
     <div class="container mx-auto flex items-center justify-between">
       <a href="/">Home</a>
 
-      <nav class="space-x-5">
+      <nav class="flex space-x-5">
         @if(auth.isLoggedIn)
         <span class="text-gray-500">{{ auth.user.name }}</span>
         <a href="/dashboard">Dashboard</a>
+        <form action="/logout" method="post">
+          {{ csrfField() }}
+          <button>Logout</button>
+        </form>
         @else
         <a href="/login">Login</a>
         <a href="/register">Register</a>

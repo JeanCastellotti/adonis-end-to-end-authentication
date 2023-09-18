@@ -41,4 +41,10 @@ export default class LoginController {
       return response.redirect().back()
     }
   }
+
+  public async destroy({ auth, response }: HttpContextContract) {
+    await auth.logout()
+
+    return response.redirect('/')
+  }
 }
