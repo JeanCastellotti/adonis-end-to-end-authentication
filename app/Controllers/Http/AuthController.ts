@@ -19,6 +19,16 @@ export default class LoginController {
         },
       })
 
+      const intendedUrl = session.get('intended_url', false)
+
+      if (intendedUrl) {
+        const redirectToIntendedUrl = response.redirect(intendedUrl)
+
+        session.forget('intended_url')
+
+        return redirectToIntendedUrl
+      }
+
       return response.redirect('/')
     } catch (err) {
       session.flash({
